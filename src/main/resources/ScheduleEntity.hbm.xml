@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.ScheduleEntity" table="schedule" schema="school">
+        <composite-id mapped="true" class="entity.ScheduleEntityPK">
+            <key-property name="courseId">
+                <column name="courseID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="roomId">
+                <column name="roomID" sql-type="int(11)"/>
+            </key-property>
+            <key-property name="startTime">
+                <column name="start_time" sql-type="time"/>
+            </key-property>
+        </composite-id>
+        <many-to-one name="courseByCourseId" class="entity.CourseEntity" insert="false" update="false">
+            <column name="courseID" />
+        </many-to-one>
+        <many-to-one name="roomByRoomId" class="entity.RoomEntity" insert="false" update="false">
+            <column name="roomID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

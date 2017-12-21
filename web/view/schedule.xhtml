@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:body>
+        <h:form id = "allTables">
+            <h:commandLink action ="Index">All tables</h:commandLink><br />
+        </h:form>
+
+        <h:form id="addUpdateForm">
+            <h:panelGrid id="panel" columns="2" border="1" cellpadding="5" cellspacing="1">
+
+                <h:outputLabel value="Select schedule:"/>
+                <h:outputLabel/>
+
+                <h:outputLabel value = "Select course ID"/>
+                <h:selectOneMenu value="#{ScheduleBean.courseId}" id="courseIdList">
+                    <f:selectItems value="#{CourseBean.getAll()}" var="schedule"
+                                   itemLabel="#{schedule.id}" itemValue="#{schedule.id}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel value = "Select room ID"/>
+                <h:selectOneMenu value="#{ScheduleBean.roomId}" id="roomIdList">
+                    <f:selectItems value="#{RoomBean.getAll()}" var="schedule"
+                                   itemLabel="#{schedule.id}" itemValue="#{schedule.id}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel value="Start time:"/>
+                <h:inputText value="#{ScheduleBean.startTime}" id="startTime"/>
+
+                <f:facet name="footer">
+                    <h:commandButton value="Add" action="#{ScheduleBean.Add}">
+                        <f:ajax execute="dataForm"/>
+                    </h:commandButton>
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+
+        <h:form id="dataForm">
+            <h:dataTable id="EducationContractTable" value="#{ScheduleBean.getAll()}" var="schedule">
+                <h:column>
+                    <f:facet name="header">Course ID</f:facet>
+                    #{schedule.courseId}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Room ID</f:facet>
+                    #{schedule.roomId}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Start time</f:facet>
+                    #{schedule.startTime}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"/>
+                    <h:commandButton value="Delete" action="#{ScheduleBean.Delete(schedule)}">
+                        <f:ajax execute="dataForm" render="dataForm:EducationContractTable"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</f:view>
+</html>

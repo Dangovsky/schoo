@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.EducationalContractEntity" table="educational_contract" schema="school">
+        <composite-id mapped="true" class="entity.EducationalContractEntityPK">
+            <key-property name="apprenticeId" >
+                <column name="apprenticeID" sql-type="int(11)" />
+            </key-property>
+            <key-property name="courseId">
+                <column name="courseID" sql-type="int(11)"/>
+            </key-property>
+        </composite-id>
+        <property name="condusionDate">
+            <column name="condusion_date" sql-type="date"/>
+        </property>
+        <property name="price">
+            <column name="price" sql-type="int(11)"/>
+        </property>
+        <property name="paymentInformation">
+            <column name="payment_information" sql-type="varchar(20)" length="20"/>
+        </property>
+        <many-to-one name="apprenticeByApprenticeId" class="entity.ApprenticeEntity" insert="false" update="false">
+            <column name="apprenticeID" />
+        </many-to-one>
+        <many-to-one name="courseByCourseId" class="entity.CourseEntity" insert="false" update="false">
+            <column name="courseID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
